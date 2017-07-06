@@ -281,7 +281,7 @@ public class Simple extends ChessUI{
 	public static boolean isSelectedPieceWhite(int r12, int c12) {
     	R1=r12; C1=c12;
 		if(chessBoard[C1][R1]>='A' & chessBoard[C1][R1]<='Z'){
-			System.out.println("Chava he tu hi gore");
+			System.out.println("This is your piece white, good work");
 			return true;}
 		else {
 			System.out.println("This is not your piece dear white, click again");
@@ -291,7 +291,7 @@ public class Simple extends ChessUI{
 	public static boolean isSelectedPieceBlack(int r12, int c12) {
 		R1=r12; C1=c12;
 		if(chessBoard[C1][R1]>='a' & chessBoard[C1][R1]<='z'){
-			System.out.println("Chava he tu hi kaliye");
+			System.out.println("This is your piece black, good work");
 			return true;}
 		else {
 			System.out.println("This is not your piece dear black, click again");
