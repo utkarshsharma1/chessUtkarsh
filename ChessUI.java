@@ -11,12 +11,12 @@ import java.awt.Image;
 public class ChessUI extends JPanel implements MouseListener{
 
 	private static final long serialVersionUID = 1L;
-	public static int x=0,y=0,k=0,counter=1,playerTurn=1,temp1,temp2,R1=0,C1=0,R2=0,C2=0;
+	public static int x=0,y=0,k=0,counter=1,playerTurn=1,temp1,temp2,R1=0,C1=0,R2=0,C2=0,KC=7,KR=3,kC=0,kR=3;
 	public Image img;
 	public static Color brown = new Color(150,76,0);
 	public static Color yellow = new Color(255,217,23);
 	Simple s;
-	public static boolean valid1,valid2,valid3 ;
+	public static boolean valid1,valid2,valid3,valid4 ;
 	
 	
 	@Override
@@ -48,22 +48,20 @@ public class ChessUI extends JPanel implements MouseListener{
    				if(counter==1){
    					R1=(x-50)/50;
    	   				C1=(y-50)/50;
-   	   				System.out.println(counter+" "+R1+C1+" "+"pla 1 cou1");
-   	   				valid1=Simple.isSelectedPieceWhite(R1, C1);
+   	   				System.out.println(counter+" "+"Row "+R1+" Column "+C1+" "+"player 1 counter 1");
+   	   				valid1=MouseClick.isSelectedPieceWhite(R1, C1);
    	   				if(valid1)
    	   	   				counter++;
    				}
    				else if(counter==2){
    					R2=(x-50)/50;
    	   				C2=(y-50)/50;
-   	   				System.out.println(counter+" "+R1+C1+" "+"pla 1 cou1");
-   	   				System.out.println(counter+" "+R2+C2+" "+"pla 1 cou2");
-   	   				valid2 = Simple.isTargetPieceWhite(R2, C2);
-   	   			
-   	   			//	valid2 = Simple.validateMove(R1,C1,R2,C2);
-   	   			//	repaint();
-   	   			//	printPieces(g,s);
-   	   			//	if(valid2){
+   	   				System.out.println(counter+" "+"Row "+R1+" Column "+C1+" "+"player 1 counter 2");
+   	   				valid2 = MouseClick.isTargetPieceWhite(R2, C2);
+   	   				if(!valid2){
+   	   					R1=R2;
+   	   					C1=C2;
+   	   				}
    	   				if(valid2){
    	   					valid3= Simple.validateMove(R1, C1, R2, C2);
    	   					if(valid3){
@@ -71,6 +69,7 @@ public class ChessUI extends JPanel implements MouseListener{
    	   						playerTurn++;
    	   						repaint();
    	   						printPieces(g,s);
+   	   						king.Check(playerTurn,R2,C2);
    	   					}
    	   				}
    				}
@@ -80,17 +79,20 @@ public class ChessUI extends JPanel implements MouseListener{
    				if(counter==1){
    					R1=(x-50)/50;
    	   				C1=(y-50)/50;
-   	   				System.out.println(counter+" "+R1+C1+" "+"pla 2 cou1");
-   	   				valid1=Simple.isSelectedPieceBlack(R1, C1);
+   	   				System.out.println(counter+" "+"Row "+R1+" Column "+C1+" "+"player 2 counter 1");
+   	   				valid1=MouseClick.isSelectedPieceBlack(R1, C1);
    	   				if(valid1)
    	   					counter++;
    				}
    				else if(counter==2){
    					R2=(x-50)/50;
    	   				C2=(y-50)/50;
-   	   				System.out.println(counter+" "+R1+C1+" "+"pla 2 cou1");
-   	   				System.out.println(counter+" "+R2+C2+" "+"pla 1 cou2");
-   	   				valid2 = Simple.isTargetPieceBlack(R2, C2);
+   	   				System.out.println(counter+" "+"Row "+R1+" Column "+C1+" "+"player 1 counter 2");
+   	   				valid2 = MouseClick.isTargetPieceBlack(R2, C2);
+   	   				if(!valid2){
+	   					R1=R2;
+	   					C1=C2;
+	   				}
    	   		//		valid2 = Simple.validateMove(R1,C1,R2,C2);
 	   		//		repaint();
 	   		//		printPieces(g,s);
@@ -101,17 +103,18 @@ public class ChessUI extends JPanel implements MouseListener{
    	   						playerTurn++;
    	   						repaint();
    	   						printPieces(g,s);
+   	   						king.Check(playerTurn,R2,C2);
    	   					}
 	   				}
    				}
    			}	
-   		
+   			
        		System.out.println();    		
        	}
     }
   
     @Override
-    public void mousePressed(MouseEvent e) {}
+	public void mousePressed(MouseEvent e) {}
    
     @Override
     public void mouseReleased(MouseEvent e) {}

@@ -149,7 +149,6 @@ public class Simple extends ChessUI{
         						chessBoard[i][j]='-';
         					}
         				}
-        				showBoard();
         				System.out.println("Congrats Black won the game !!!");
         			}
         			else if(chessBoard[d][c]=='k'){
@@ -159,7 +158,6 @@ public class Simple extends ChessUI{
         					}
         				}
         				System.out.println("Congrats White  won the game !!!");
-        				showBoard();
         			}
         			else if(chessBoard[b][a]=='P' & d==0){
         				chessBoard[d][c]='Q';
@@ -170,6 +168,12 @@ public class Simple extends ChessUI{
         				chessBoard[d][c]='q';
         				chessBoard[b][a] = '-';
         				showBoard();
+        			}
+        			else if(chessBoard[d][c]=='K'){
+        				KR=c;KC=d;
+        			}
+        			else if(chessBoard[d][c]=='k'){
+        				kR=c;kC=d;
         			}
         			else if(a==3 & b==7 & c==1 & d==7 & whiteKing==1 & whiteRook==1){
         				chessBoard[d][c]='K';
@@ -185,12 +189,19 @@ public class Simple extends ChessUI{
         				chessBoard[0][2]='r';
         				showBoard();
         			}
+        			
         			else{
+        				if(chessBoard[b][a]=='K'){
+        					KC=d;KR=c;
+        				}
+        				else if(chessBoard[b][a]=='k'){
+        					kC=d;kR=c;
+        				}
         				chessBoard[d][c] = chessBoard[b][a];
         				chessBoard[b][a] = '-';
         				showBoard();
         			}
-        		
+        			System.out.println("White king position is "+KR +" "+KC+" and black king position is "+kR+" "+kC);
         		}
         		else
         			System.out.println("Invalid Move");
@@ -200,22 +211,28 @@ public class Simple extends ChessUI{
     private static boolean validate(char e, int R1, int C1, int R2, int C2) {
 		switch(e){
 		case 'P' : if(C1==6){
-					if( (C1-C2==2 |  C1-C2==1 ) & R1-R2==0 & noPiece(R2,C2))
-						return true;
+			if( (C1-C2==2 |  C1-C2==1 ) & R1-R2==0 & noPiece(R2,C2))
+				return true;
+			else if(blackPiece(R2, C2)){
+				if(C1-C2==1 & Math.abs(R2-R1)==1)
+				return true;
 				}
-				else if(C1-C2==1 & noPiece(R2,C2) & R1-R2==0 & noPiece(R2,C2))
-						return true;
-					
-				else if(blackPiece(R2, C2)){
-					if(C1-C2==1 & Math.abs(R2-R1)==1)
-						return true;
-					}
-				
+			}
+			else if(C1-C2==1 & noPiece(R2,C2) & R1-R2==0 & noPiece(R2,C2))
+				return true;
+			else if(blackPiece(R2, C2)){
+				if(C1-C2==1 & Math.abs(R2-R1)==1)
+					return true;
+			}
 			break;
 			
 		case 'p' : if(C1==1){
 			if( (C1-C2==-2 |  C1-C2==-1 ) & R1-R2==0 & noPiece(R2,C2))
 				return true;
+			else if(whitePiece(R2, C2)){
+				if(C1-C2==-1 & Math.abs(R2-R1)==1)
+					return true;
+				}
 			}
 		else if(C1-C2==-1 & noPiece(R2,C2) & R1-R2==0 & noPiece(R2,C2))
 			return true;
@@ -278,43 +295,4 @@ public class Simple extends ChessUI{
 		return false;
 	}
 
-	public static boolean isSelectedPieceWhite(int r12, int c12) {
-    	R1=r12; C1=c12;
-		if(chessBoard[C1][R1]>='A' & chessBoard[C1][R1]<='Z'){
-			System.out.println("This is your piece white, good work");
-			return true;}
-		else {
-			System.out.println("This is not your piece dear white, click again");
-			return false;}
-	}
-
-	public static boolean isSelectedPieceBlack(int r12, int c12) {
-		R1=r12; C1=c12;
-		if(chessBoard[C1][R1]>='a' & chessBoard[C1][R1]<='z'){
-			System.out.println("This is your piece black, good work");
-			return true;}
-		else {
-			System.out.println("This is not your piece dear black, click again");
-			return false;}
-	}
-
-	public static boolean isTargetPieceWhite(int r22, int c22) {
-		R2=r22; C2=c22;
-		if(chessBoard[C2][R2]>='A' & chessBoard[C2][R2]<='Z'){
-			System.out.println("You cant attack your own piece white brother");
-			return false;
-		}
-		else
-			return true;
-	}
-
-	public static boolean isTargetPieceBlack(int r22, int c22) {
-		R2=r22; C2=c22;
-		if(chessBoard[C2][R2]>='a' & chessBoard[C2][R2]<='z'){
-			System.out.println("You cant attack your own piece black brother");
-			return false;
-		}
-		else
-			return true;
-	}	
 }
